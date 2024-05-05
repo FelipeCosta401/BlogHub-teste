@@ -23,7 +23,10 @@ const ModalBackground = ({ action }) => {
           <img src={logo} alt="Logo do website" />
           <div className={estilos.mainContent}>
             <h2>Bem vindo ao BlogHub</h2>
-            <p className={estilos.backgroundParagraph}>
+            <p
+              className={estilos.backgroundParagraph}
+              style={{ textAlign: "justify" }}
+            >
               No vasto universo da blogosfera, o BlogHub se destaca como um
               ponto de encontro para mentes curiosas, ávidas por explorar uma
               variedade de tópicos fascinantes.

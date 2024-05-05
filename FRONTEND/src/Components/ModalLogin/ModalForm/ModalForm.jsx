@@ -1,19 +1,84 @@
-import estilos from "./modalform.module.css";
+import { useState } from "react";
+import axios from "axios";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import estilos from "./modalform.module.css";
+
 const ModalForm = ({ action }) => {
+  const [user, setUser] = useState({
+    name: "",
+    password: "",
+  });
+
+  const [newUser, setNewUser] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confpassword: "",
+  });
+
+  const setarUser = (e) => {
+    const { name, value } = e.target;
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const userRegister = (e) => {
+    const { name, value } = e.target;
+    setNewUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
+  };
+
+  const logar = (e) => {
+    e.preventDefault();
+  };
+
+  const register = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:3000/register", {
+        name: newUser.name,
+        email: newUser.email,
+        password: newUser.password,
+        confpassword: newUser.confpassword,
+      })
+      .then((res) => {
+        toast.success(res.data.msg);
+
+        setNewUser({
+          name: "",
+          email: "",
+          password: "",
+          confpassword: "",
+        });
+      })
+      .catch((res) => {
+        toast.error(res.response.data.msg);
+      });
+  };
+
   return (
     <>
       {action == "login" ? (
         <div className={estilos.container}>
-          <div className={estilos.form}>
+          <form className={estilos.form} onSubmit={logar}>
             <div className={estilos.input}>
               <TextField
                 id="outlined-basic"
                 label="Usuário/E-mail"
                 variant="outlined"
+                name="name"
+                value={user.name}
+                onChange={setarUser}
                 style={{ width: "100%" }}
               />
             </div>
@@ -22,24 +87,45 @@ const ModalForm = ({ action }) => {
                 id="outlined-basic"
                 label="Senha"
                 variant="outlined"
+                name="password"
+                value={user.password}
+                onChange={setarUser}
                 style={{ width: "100%" }}
               />
             </div>
             <div className={estilos.loginButton}>
-              <Button variant="contained" style={{ width: "100%" }}>
+              <Button
+                type="submit"
+                variant="contained"
+                style={{ width: "100%" }}
+              >
                 Entrar
               </Button>
             </div>
-          </div>
+          </form>
         </div>
       ) : (
         <div className={estilos.container}>
-          <div className={estilos.form}>
+          <form className={estilos.form} onSubmit={register}>
             <div className={estilos.input}>
               <TextField
                 id="outlined-basic"
-                label="Usuário/E-mail"
+                label="Nome"
                 variant="outlined"
+                name="name"
+                value={newUser.name}
+                onChange={userRegister}
+                style={{ width: "100%" }}
+              />
+            </div>
+            <div className={estilos.input}>
+              <TextField
+                id="outlined-basic"
+                label="Email"
+                variant="outlined"
+                name="email"
+                value={newUser.email}
+                onChange={userRegister}
                 style={{ width: "100%" }}
               />
             </div>
@@ -47,6 +133,9 @@ const ModalForm = ({ action }) => {
               <TextField
                 id="outlined-basic"
                 label="Senha"
+                name="password"
+                value={newUser.password}
+                onChange={userRegister}
                 variant="outlined"
                 style={{ width: "100%" }}
               />
@@ -54,26 +143,27 @@ const ModalForm = ({ action }) => {
             <div className={estilos.input}>
               <TextField
                 id="outlined-basic"
-                label="Senha"
+                label="Confirme sua senha"
                 variant="outlined"
+                name="confpassword"
+                value={newUser.confpassword}
+                onChange={userRegister}
                 style={{ width: "100%" }}
               />
             </div>
-            <div className={estilos.input}>
-              <TextField
-                id="outlined-basic"
-                label="Senha"
-                variant="outlined"
-                style={{ width: "100%" }}
-              />
-            </div>
-            
+
             <div className={estilos.loginButton}>
-              <Button variant="contained" style={{ width: "100%" }}>
+              <Button
+                type="submit"
+                variant="contained"
+                style={{ width: "100%" }}
+              >
                 Criar conta
               </Button>
             </div>
-          </div>
+          </form>
+
+          <ToastContainer />
         </div>
       )}
     </>

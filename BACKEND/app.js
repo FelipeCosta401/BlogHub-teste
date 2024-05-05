@@ -16,6 +16,15 @@ const User = require("./models/User");
 
 //Rotas
 
+//Header settings
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
 //Public Route
 app.get("/", (req, res) => {
   res.status(200).json({ msg: "Bem vindo à API!" });
@@ -121,6 +130,21 @@ app.post("/login", async (req, res) => {
     }
   }
 });
+
+// Users list
+app.get("/user/list", async (req, res) =>{
+  try{
+    const users = await User.find()
+
+    res.status(200).json(users)
+  } catch(err){
+    console.log(err)
+    res.status(404).json({msg: "Nenhum usuário cadastrado"})
+  }
+
+})
+
+
 
 // Credentials
 const dbUser = process.env.DB_USER;
