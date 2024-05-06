@@ -27,26 +27,30 @@ const FormModal = () => {
 
   const register = (e) => {
     e.preventDefault();
-    axios
-      .post("http://localhost:3000/register", {
-        name: newUser.name,
-        email: newUser.email,
-        password: newUser.password,
-        confpassword: newUser.confpassword,
-      })
-      .then((res) => {
-        toast.success(res.data.msg);
+    if (!newUser.name || !newUser.email || !newUser.password) {
+      toast.error("Preencha todos os campos");
+    } else {
+      axios
+        .post("http://localhost:3000/register", {
+          name: newUser.name,
+          email: newUser.email,
+          password: newUser.password, 
+          confpassword: newUser.confpassword,
+        })
+        .then((res) => {
+          toast.success(res.data.msg);
 
-        setNewUser({
-          name: "",
-          email: "",
-          password: "",
-          confpassword: "",
+          setNewUser({
+            name: "",
+            email: "",
+            password: "",
+            confpassword: "",
+          });
+        })
+        .catch((res) => {
+          toast.error(res.response.data.msg);
         });
-      })
-      .catch((res) => {
-        toast.error(res.response.data.msg);
-      });
+    }
   };
 
   return (

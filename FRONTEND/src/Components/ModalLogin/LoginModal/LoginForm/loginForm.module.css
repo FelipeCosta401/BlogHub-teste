@@ -15,6 +15,7 @@
     width: 100%;
     background-color: rgb(211, 211, 211);
     margin-bottom: 2vh;
+    border-radius: 8px;
 }
 
 .loginButton{

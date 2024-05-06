@@ -25,6 +25,21 @@ const LoginForm = () => {
 
   const logar = (e) => {
     e.preventDefault();
+    if (!user.name || !user.password) {
+      toast.error("Preencha todos os campos!");
+    } else {
+      axios
+        .post("http://localhost:3000/login", {
+          email: user.name,
+          password: user.password,
+        })
+        .then((res) => {
+          toast.success(res.data.msg);
+        })
+        .catch((res, err) => {
+          toast.error(res.response.data.msg);
+        });
+    }
   };
   return (
     <>
@@ -38,7 +53,7 @@ const LoginForm = () => {
               name="name"
               value={user.name}
               onChange={setarUser}
-              style={{ width: "100%" }}
+              style={{ width: "100%", outline: "none" }}
             />
           </div>
           <div className={estilos.input}>
@@ -58,6 +73,7 @@ const LoginForm = () => {
             </Button>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </>
   );

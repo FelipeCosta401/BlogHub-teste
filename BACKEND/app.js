@@ -19,7 +19,10 @@ const User = require("./models/User");
 //Header settings
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
@@ -31,17 +34,35 @@ app.get("/", (req, res) => {
 });
 
 //Private Route
-app.get("/user/:id", async (req, res) => {
+app.get("/user/:id", checkToken, async (req, res) => {
   const { id } = req.params;
 
   //Check if user exists
   const user = await User.findById(id, "-password");
   if (!user) {
     res.status(404).json({ msg: "Usuário não encontrado!" });
-  } else{
-    res.status(200).json({msg: "Logado"})
+  } else {
+    res.status(200).json({ user });
   }
 });
+
+function checkToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) {
+    res.status(401).json({ msg: "Acesso negado!" });
+  } else {
+    try {
+      const secret = process.env.SECRET;
+
+      jwt.verify(token, secret);
+      next();
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ msg: "Token inválido!" });
+    }
+  }
+}
 
 //Register Route
 app.post("/register", async (req, res) => {
@@ -131,20 +152,6 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Users list
-app.get("/user/list", async (req, res) =>{
-  try{
-    const users = await User.find()
-
-    res.status(200).json(users)
-  } catch(err){
-    console.log(err)
-    res.status(404).json({msg: "Nenhum usuário cadastrado"})
-  }
-
-})
-
-
 
 // Credentials
 const dbUser = process.env.DB_USER;
@@ -152,7 +159,7 @@ const dbPassword = process.env.DB_PASS;
 
 mongoose
   .connect(
-    `mongodb+srv://${dbUser}:wYY8ba2UVLc4KIs9@cluster0.ckyru0o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+    `mongodb+srv://${dbUser}:${dbPassword}@cluster0.ckyru0o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
   )
   .then(() => {
     app.listen(3000);
