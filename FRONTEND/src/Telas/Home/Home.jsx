@@ -1,4 +1,7 @@
-import Navbar from "../Components/Navbar/Navbar";
+import Navbar from "../../Components/Navbar/Navbar";
+import Feed from "../Publi/Feed/Feed";
+
+import estilos from "./home.module.css"
 
 const Home = () => {
   return (
@@ -8,7 +11,9 @@ const Home = () => {
           <Navbar />
         </header>
         <main>
-          <p>Essa é a main</p>
+          <div className={estilos.publi}>
+            <Feed />
+          </div>
         </main>
         <footer>
           <h1>E esse é o footer</h1>

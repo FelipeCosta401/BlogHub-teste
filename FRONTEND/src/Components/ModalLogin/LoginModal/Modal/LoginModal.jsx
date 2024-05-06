@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { IoIosCloseCircle } from "react-icons/io";
 
-import Home from "../../../../Telas/Home";
+import Home from "../../../../Telas/Home/Home";
 import ModalBackground from "../../ModalBackground/ModalBackground";
 import LoginForm from "../LoginForm/LoginForm";
 import estilos from "./loginModal.module.css";
@@ -44,7 +44,7 @@ const LoginModal = () => {
                   />
                 </div>
                 <h1 className={estilos.title}>Faça o login</h1>
-                <LoginForm  />
+                <LoginForm />
                 <h4 className={estilos.registerOption}>
                   Não tem login? <a href="/cadastro">Cadastre-se</a>
                 </h4>

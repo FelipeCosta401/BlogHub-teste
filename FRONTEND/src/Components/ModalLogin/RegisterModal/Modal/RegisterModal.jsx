@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Dialog } from "primereact/dialog";
 import { IoIosCloseCircle } from "react-icons/io";
 
-import Home from "../../../../Telas/Home";
+import Home from "../../../../Telas/Home/Home";
 import ModalBackground from "../../ModalBackground/ModalBackground";
 import RegisterForm from "../RegisterForm/RegisterForm";
 import estilos from "./registerModal.module.css";

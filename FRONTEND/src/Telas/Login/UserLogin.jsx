@@ -1,5 +1,5 @@
-import LoginModal from "../Components/ModalLogin/LoginModal/Modal/LoginModal";
-import RegisterModal from "../Components/ModalLogin/RegisterModal/Modal/RegisterModal";
+import LoginModal from "../../Components/ModalLogin/LoginModal/Modal/LoginModal";
+import RegisterModal from "../../Components/ModalLogin/RegisterModal/Modal/RegisterModal";
 
 const UserLogin = ({ action }) => {
   return (

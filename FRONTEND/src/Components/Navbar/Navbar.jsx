@@ -9,7 +9,9 @@ const Navbar = () => {
     <>
       <div className={estilos.container}>
         <div className={estilos.logo}>
-          <img src={Logo} alt="" />
+          <Link to="/">
+            <img src={Logo} alt="" />
+          </Link>
         </div>
         <div className={estilos.searchField}>
           <input
