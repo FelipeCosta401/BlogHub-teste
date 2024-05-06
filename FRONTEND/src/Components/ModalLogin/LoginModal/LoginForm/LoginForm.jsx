@@ -40,6 +40,7 @@ const LoginForm = () => {
           toast.error(res.response.data.msg);
         });
     }
+    window.location.replace("/2")
   };
   return (
     <>

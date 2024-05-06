@@ -1,10 +1,15 @@
-import Logo from "../../assets/MainLogo.png";
-import estilos from "./navbar.module.css";
+import { useState } from "react";
+
 import { Link } from "react-router-dom";
 
-import { FaSearch, FaRegUserCircle } from "react-icons/fa";
+import { FaSearch, FaRegUserCircle, FaBell } from "react-icons/fa";
 
-const Navbar = () => {
+import SidebarComponent from "../SidebarComponent/SidebarComponent";
+import Logo from "../../assets/MainLogo.png";
+import estilos from "./navbar.module.css";
+
+const Navbar = ({ status }) => {
+  const [sidebar, setSidebar] = useState(false);
   return (
     <>
       <div className={estilos.container}>
@@ -23,10 +28,26 @@ const Navbar = () => {
           <FaSearch size={35} className={estilos.searchIcon} />
         </div>
         <div className={estilos.loginContainer}>
-          <Link to="/login" className={estilos.loginIcon}>
-            <FaRegUserCircle size={55} />
-          </Link>
+          {status && (
+            <div className={estilos.loginContainerUser}>
+              <div className={estilos.accountIcon}>
+                <FaBell size={55} color={"gold"} />
+              </div>
+              <div className={estilos.loginIcon}>
+                <FaRegUserCircle
+                  size={55}
+                  onClick={() => setSidebar(!sidebar)}
+                />
+              </div>
+            </div>
+          )}
+          {!status && (
+            <Link to="/login" className={estilos.loginIcon}>
+              <FaRegUserCircle size={55} />
+            </Link>
+          )}
         </div>
+        {sidebar && <SidebarComponent onClose={() => setSidebar(false)} />}
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 .container{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     height: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -49,13 +50,27 @@
     color: rgba(0, 0, 0, 0.5);
 }
 
+.loginContainer, .loginContainerUser{    
+    display: flex;
+    text-align: center;
+    justify-content: space-between;
+}
+
 .loginContainer{
     height: 50%;
     width: 20vw;
     margin: auto 5vw;
-    text-align: center;
+    align-items: center;
+}
+
+.loginContainerUser{
+    width: 100%;
 }
 
 .loginIcon{
     color: #000;
+}
+
+.loginIcon:hover{
+    color: rgb(122, 122, 252);
 }
