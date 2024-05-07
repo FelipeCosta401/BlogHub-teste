@@ -14,7 +14,8 @@ const FormModal = () => {
     name: "",
     email: "",
     password: "",
-    confpassword: "",
+    username: "",
+    birthdate: "",
   });
 
   const userRegister = (e) => {
@@ -27,15 +28,22 @@ const FormModal = () => {
 
   const register = (e) => {
     e.preventDefault();
-    if (!newUser.name || !newUser.email || !newUser.password) {
+    if (
+      !newUser.name ||
+      !newUser.email ||
+      !newUser.password ||  
+      !newUser.username ||
+      !newUser.birthdate
+    ) {
       toast.error("Preencha todos os campos");
     } else {
       axios
-        .post("http://localhost:3000/register", {
+        .post("http://172.16.0.19:8000/api/user", {
           name: newUser.name,
           email: newUser.email,
-          password: newUser.password, 
-          confpassword: newUser.confpassword,
+          password: newUser.password,
+          username: newUser.username,
+          birthdate: newUser.birthdate,
         })
         .then((res) => {
           toast.success(res.data.msg);
@@ -44,7 +52,8 @@ const FormModal = () => {
             name: "",
             email: "",
             password: "",
-            confpassword: "",
+            username: "",
+            birthdate: "",
           });
         })
         .catch((res) => {
@@ -93,10 +102,21 @@ const FormModal = () => {
           <div className={estilos.input}>
             <TextField
               id="outlined-basic"
-              label="Confirme sua senha"
+              label="Nome de usuário"
               variant="outlined"
-              name="confpassword"
-              value={newUser.confpassword}
+              name="username"
+              value={newUser.username}
+              onChange={userRegister}
+              style={{ width: "100%" }}
+            />
+          </div>
+          <div className={estilos.input}>
+            <TextField
+              id="outlined-basic"
+              label="Data de nascimento"
+              variant="outlined"
+              name="birthdate"
+              value={newUser.birthdate}
               onChange={userRegister}
               style={{ width: "100%" }}
             />

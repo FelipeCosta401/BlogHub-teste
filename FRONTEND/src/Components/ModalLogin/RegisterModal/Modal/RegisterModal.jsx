@@ -26,7 +26,7 @@ const RegisterModal = () => {
           <Dialog
             visible={visible}
             className={estilos.modalContainer}
-            showHeader={false}
+            showHeader={false}  
           >
             <div className={estilos.modalContent}>
               <div className={estilos.modalContentBackground}>
@@ -42,8 +42,9 @@ const RegisterModal = () => {
                       closeModal();
                     }}
                   />
+
+                  <h1 className={estilos.title}>Cadastre-se</h1>
                 </div>
-                <h1 className={estilos.title}>Cadastre-se</h1>
                 <RegisterForm />
                 <h4 className={estilos.registerOption}>
                   Já tem conta? <a href="/login">Entre</a>

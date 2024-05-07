@@ -6,7 +6,7 @@ import { FiMessageCircle } from "react-icons/fi";
 
 import estilos from "./card.module.css";
 
-const Card = ({ id, title, desc, img }) => {
+const Card = ({ id, title, desc, img, user, userImg, data }) => {
   return (
     <>
       <div
@@ -15,16 +15,13 @@ const Card = ({ id, title, desc, img }) => {
           window.location.replace(`/post/${id}`);
         }}
       >
-        <div
-          className={estilos.cardImg}
-          style={{
-            background: `url(${img})`,
-          }}
-        ></div>
+        <div className={estilos.cardImg}>
+          <img src={img} />
+        </div>
         <div className={estilos.cardContainer}>
           <div className={estilos.userInfo}>
-            <FaUserCircle size={25} />
-            <p>Nome do usuário</p>
+            {!userImg && <FaUserCircle size={25} />}
+            <p>{user}</p>
           </div>
           <div className={estilos.cardContent}>
             <div clsasName={estilos.cardTitle}>
@@ -47,7 +44,7 @@ const Card = ({ id, title, desc, img }) => {
                 </div>
               </div>
               <div className={estilos.cardInfo}>
-                <p>Publicado: 12:13</p>
+                <p>Publicado: {data}</p>
               </div>
             </div>
           </div>
